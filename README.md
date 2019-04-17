@@ -9,8 +9,6 @@
 > * DES
 > * PBE
 
-------
-
 系统功能实现：
 
 > - [x] 批量加密
@@ -30,7 +28,5 @@
 
 ------
 
-作者 [@HiramJoyce][3]     
-2016 年 07月 07日    
-
-[1]: https://github.com/HiramJoyce/
+作者 [HiramJoyce](https://github.com/HiramJoyce/)     
+2019 年 04 月 17 日
