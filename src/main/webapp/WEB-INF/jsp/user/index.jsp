@@ -18,11 +18,10 @@
     <link rel="stylesheet" href="${ctx}/resource/admin/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="${ctx}/resource/admin/assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="${ctx}/resource/admin/assets/css/style.css">
-    <link rel="stylesheet" type="text/css" href="${ctx}/resource/calender/css/index.css"/>
-    <link rel="stylesheet" href="https://at.alicdn.com/t/font_234130_nem7eskcrkpdgqfr.css">
-    <link href="${ctx}/resource/datepicker/css/foundation-datepicker.css" rel="stylesheet" type="text/css">
     <style>
-    @page { margin: 0; }
+        @page {
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -33,17 +32,19 @@
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active">
-                    <a href="${ctx}/user/encode"><i class="menu-icon fa fa-calendar"></i>批量加密</a>
+                    <a href="${ctx}/user/encode"><i class="menu-icon fa fa-lock"></i>批量加密</a>
                 </li>
                 <li>
-                    <a href="${ctx}/user/decode"> <i class="menu-icon fa fa-clipboard"></i>批量解密</a>
+                    <a href="${ctx}/user/decode"> <i class="menu-icon fa fa-unlock"></i>批量解密</a>
                 </li>
-                <li>
-                    <a href="${ctx}/user/arithmetic"> <i class="menu-icon fa fa-clipboard"></i>算法管理</a>
-                </li>
-                <li>
-                    <a href="${ctx}/user/key"> <i class="menu-icon fa fa-clipboard"></i>秘钥管理</a>
-                </li>
+                <c:if test="${sessionScope.role == 'admin'}">
+                    <li>
+                        <a href="${ctx}/user/arithmetic"> <i class="menu-icon fa fa-bar-chart-o"></i>算法管理</a>
+                    </li>
+                    <li>
+                        <a href="${ctx}/user/key"> <i class="menu-icon fa fa-key"></i>秘钥管理</a>
+                    </li>
+                </c:if>
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
@@ -70,7 +71,7 @@
                              alt="User Avatar">
                     </a>
                     <div class="user-menu dropdown-menu">
-                        <a class="nav-link" href="${ctx}/logout"><i class="fa fa-power -off"></i>Logout</a>
+                        <a class="nav-link" href="${ctx}/user/logout"><i class="fa fa-power -off"></i>Logout</a>
                     </div>
                 </div>
 
@@ -84,15 +85,37 @@
             <div class="clearfix"></div>
             <div class="orders">
                 <div class="row">
-                    <div class="col-xl-8">
+                    <div class="col-lg-6">
                         <div class="card">
-
+                            <form action="${ctx}/user/encode" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <div class="card-header">
+                                    <strong>批量加密</strong>
+                                </div>
+                                <div class="card-body card-block">
+                                    <div class="row form-group" style="margin-bottom: 0;">
+                                        <div style="width: 100px; margin-left: 15px;">
+                                            <label for="file-input" class=" form-control-label">上传文件</label>
+                                        </div>
+                                        <div><input type="file" id="file-input" name="file" class="form-control-file">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        <i class="fa fa-dot-circle-o"></i> 加密
+                                    </button>
+                                    <button type="reset" class="btn btn-danger btn-sm">
+                                        <i class="fa fa-ban"></i> 重置
+                                    </button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <script src="${ctx}/resource/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>

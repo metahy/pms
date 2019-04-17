@@ -51,7 +51,7 @@ public class PBE {
             cipher.init(Cipher.DECRYPT_MODE, key, parameterSpec);
             return new String(cipher.doFinal(Hex.decodeHex(cipherText)));
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }

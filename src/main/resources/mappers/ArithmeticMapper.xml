@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pms.dao.ArithmeticDao">
+    <resultMap id="arithmeticMap" type="com.pms.domain.Arithmetic">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="secret_key" property="secretKey"/>
+        <result column="in_use" property="inUse"/>
+    </resultMap>
+    <sql id="base_column">
+        id, name, secret_key, in_use
+    </sql>
+    <select id="selectUsingArithmetic" resultMap="arithmeticMap">
+        select <include refid="base_column"/> from arithmetic where in_use=1 limit 1;
+    </select>
+    <select id="selectAllArithmetics" resultMap="arithmeticMap">
+        select <include refid="base_column"/> from arithmetic;
+    </select>
+    <update id="updateArithmeticInUse">
+        update arithmetic set in_use=#{inUse} where id=#{id};
+    </update>
+    <update id="updateArithmeticSecretKey">
+        update arithmetic set secret_key=#{secretKey} where id=#{id};
+    </update>
+</mapper>

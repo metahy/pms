@@ -60,7 +60,7 @@ public class DES {
             cipher.init(Cipher.DECRYPT_MODE, convertKey);
             return new String(cipher.doFinal(Hex.decodeHex(cipherText)));
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }

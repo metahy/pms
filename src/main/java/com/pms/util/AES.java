@@ -54,7 +54,7 @@ public class AES {
             cipher.init(Cipher.DECRYPT_MODE, keyIn);
             return new String(cipher.doFinal(Hex.decodeHex(cipherText)));
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }

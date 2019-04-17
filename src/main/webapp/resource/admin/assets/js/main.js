@@ -1,54 +1,6 @@
 $.noConflict();
 
 jQuery(document).ready(function ($) {
-
-    var startDate = $('#startDate');
-    var endDate = $('#endDate');
-    var monthDate = $('#monthDate');
-    startDate.fdatepicker({
-        format: 'yyyy-mm-dd'
-    });
-    endDate.fdatepicker({
-        format: 'yyyy-mm-dd'
-    });
-    monthDate.fdatepicker({
-        format: 'yyyy-mm'
-    });
-    startDate.change(function () {
-        if (endDate.val() != null && endDate.val() !== '') {
-            var start = new Date(startDate.val().replace(/-/g, '/'))
-            var end = new Date(endDate.val().replace(/-/g, '/'))
-            var num = (end - start) / (1000 * 3600 * 24);
-            var days = parseInt(Math.ceil(num));
-            $('#dayCount').val(days)
-        }
-    });
-    endDate.change(function () {
-        if (startDate.val() != null && startDate.val() !== '') {
-            var start = new Date(startDate.val().replace(/-/g, '/'))
-            var end = new Date(endDate.val().replace(/-/g, '/'))
-            var num = (end - start) / (1000 * 3600 * 24);
-            var days = parseInt(Math.ceil(num));
-            // if (days <= 0) {
-            //     end.setDate(start.getDate() + 1);
-            //     var year = end.getFullYear();
-            //     var month =(end.getMonth() + 1).toString();
-            //     var day = (end.getDate()).toString();
-            //     if (month.length === 1) {
-            //         month = "0" + month;
-            //     }
-            //     if (day.length === 1) {
-            //         day = "0" + day;
-            //     }
-            //     var endStr = year + "-" + month + "-" + day;
-            //     $('#endDate').val(endStr)
-            //     $('#dayCount').val(1)
-            // } else {
-            //     $('#dayCount').val(days)
-            // }
-            $('#dayCount').val(days <= 0 ? 1 : days)
-        }
-    });
     "use strict";
 
     [].slice.call(document.querySelectorAll('select.cs-select')).forEach(function (el) {
