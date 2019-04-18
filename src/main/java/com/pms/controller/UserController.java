@@ -2,7 +2,9 @@ package com.pms.controller;
 
 import com.pms.domain.Arithmetic;
 import com.pms.domain.User;
+import com.pms.domain.UserKey;
 import com.pms.service.ArithmeticService;
+import com.pms.service.UserKeyService;
 import com.pms.service.UserService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,23 +30,96 @@ public class UserController {
     private UserService userService;
     @Autowired
     private ArithmeticService arithmeticService;
+    @Autowired
+    private UserKeyService userKeyService;
 
     @RequestMapping("")
     public String index() {
-        return "user/index";
+        return "redirect:/user/encode";
     }
 
-    @GetMapping("encode")
-    public String encode() {
-        return "user/index";
+    @GetMapping("user")
+    public String user(Model model, HttpSession session) {
+        User user = userService.getUser((Integer) session.getAttribute("id"));
+        model.addAttribute("user", user);
+        List<UserKey> userKeys = userKeyService.getUserKeysByUserId(user.getId());
+        model.addAttribute("userKeys", userKeys);
+        return "user/user";
     }
 
-    @PostMapping("encode")
+    @PostMapping("user")
+    public String userUpdate(User user, Model model, HttpSession session) {
+        if (userService.updateUser(user) > 0) {
+            session.setAttribute("id", user.getId());
+            session.setAttribute("userName", user.getUserName());
+            session.setAttribute("realName", user.getRealName());
+            session.setAttribute("role", user.getAdmin() ? "admin" : "user");
+        }
+        model.addAttribute("user", user);
+        List<UserKey> userKeys = userKeyService.getUserKeysByUserId(user.getId());
+        model.addAttribute("userKeys", userKeys);
+        return "user/user";
+    }
+
+    @PostMapping("register")
+    public String register(User user, Model model, HttpSession session) {
+        User userDb = userService.register(user);
+        if (userDb != null) {
+            session.setAttribute("id", userDb.getId());
+            session.setAttribute("userName", userDb.getUserName());
+            session.setAttribute("realName", userDb.getRealName());
+            session.setAttribute("role", userDb.getAdmin() ? "admin" : "user");
+        }
+        model.addAttribute("user", userDb);
+        return "user/user";
+    }
+
+    @GetMapping("encodeBatch")
+    public String encodeBatch(Model model) {
+        List<Arithmetic> arithmetics = arithmeticService.getInUseArithmetic();
+        model.addAttribute("arithmetics", arithmetics);
+        return "user/encodeBatch";
+    }
+
+    @PostMapping("encodeBatch")
     public ResponseEntity<byte[]> encodeFile(@RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
         if (!file.isEmpty()) {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add("Content-Disposition", "attchement;filename=" + file.getOriginalFilename().substring(Objects.requireNonNull(file.getOriginalFilename()).lastIndexOf(".")) + "-encode" + ".txt");
             return new ResponseEntity<>(FileUtils.readFileToByteArray(arithmeticService.encode(file)), httpHeaders, HttpStatus.OK);
+        }
+        return null;
+    }
+
+    @GetMapping("encode")
+    public String encode(Model model) {
+        List<Arithmetic> arithmetics = arithmeticService.getInUseArithmetic();
+        model.addAttribute("arithmetics", arithmetics);
+        return "user/index";
+    }
+
+    @PostMapping("encode")
+    public String encode(UserKey userKey, Model model) {
+        System.out.println(userKey);
+        List<Arithmetic> arithmetics = arithmeticService.getInUseArithmetic();
+        model.addAttribute("arithmetics", arithmetics);
+        model.addAttribute("userKey", arithmeticService.encode(userKey));
+        return "user/index";
+    }
+
+    @GetMapping("decodeBatch")
+    public String decodeBatch(Model model) {
+        List<Arithmetic> arithmetics = arithmeticService.getInUseArithmetic();
+        model.addAttribute("arithmetics", arithmetics);
+        return "user/decodeBatch";
+    }
+
+    @PostMapping("decodeBatch")
+    public ResponseEntity<byte[]> decodeFile(@RequestParam(value = "file", required = false) MultipartFile file, String secretKey) throws IOException {
+        if (!file.isEmpty()) {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("Content-Disposition", "attchement;filename=" + file.getOriginalFilename().substring(Objects.requireNonNull(file.getOriginalFilename()).lastIndexOf(".")) + "-decode" + ".txt");
+            return new ResponseEntity<>(FileUtils.readFileToByteArray(arithmeticService.decode(file, secretKey)), httpHeaders, HttpStatus.OK);
         }
         return null;
     }
@@ -55,19 +130,18 @@ public class UserController {
     }
 
     @PostMapping("decode")
-    public ResponseEntity<byte[]> decodeFile(@RequestParam(value = "file", required = false) MultipartFile file, String secretKey) throws IOException {
-        if (!file.isEmpty()) {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Content-Disposition", "attchement;filename=" + file.getOriginalFilename().substring(Objects.requireNonNull(file.getOriginalFilename()).lastIndexOf(".")) + "-decode" + ".txt");
-            return new ResponseEntity<>(FileUtils.readFileToByteArray(arithmeticService.decode(file, secretKey)), httpHeaders, HttpStatus.OK);
-        }
-        return null;
+    public String decode(UserKey userKey, Model model) {
+//        System.out.println(userKey);
+//        List<Arithmetic> arithmetics = arithmeticService.getInUseArithmetic();
+//        model.addAttribute("arithmetics", arithmetics);
+//        model.addAttribute("userKey", arithmeticService.encode(userKey));
+        return "user/decode";
     }
 
     @RequestMapping("arithmetic")
-    public String arithmetic(String id, Model model) {
+    public String arithmetic(String id, String inUse, Model model) {
         if (id != null) {
-            arithmeticService.useArithmetic(Integer.valueOf(id));
+            arithmeticService.setArithmeticInUse(Integer.valueOf(id), inUse);
         }
         List<Arithmetic> arithmetics = arithmeticService.getAllArithmetic();
         model.addAttribute("arithmetics", arithmetics);
@@ -112,5 +186,11 @@ public class UserController {
     public String logout(HttpServletRequest request) {
         request.getSession().invalidate();
         return "redirect:/user/login";
+    }
+
+    @GetMapping("userKeyDel")
+    public String userKeyDel(String id) {
+        userKeyService.deleteUserKeyById(id);
+        return "redirect:/user/user";
     }
 }

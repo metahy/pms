@@ -17,4 +17,6 @@ public interface ArithmeticDao {
     int updateArithmeticInUse(@Param("id") Integer id, @Param("inUse") Boolean inUse);
 
     int updateArithmeticSecretKey(@Param("id")Integer id, @Param("secretKey") String secretKey);
+
+    List<Arithmetic> selectUsingArithmetics();
 }

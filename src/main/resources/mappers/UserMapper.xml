@@ -16,4 +16,13 @@
     <select id="selectUserByUserName" resultMap="userMap">
         select <include refid="base_column"/> from user where user_name=#{userName};
     </select>
+    <select id="selectUserById" resultMap="userMap">
+        select <include refid="base_column"/> from user where id=#{id};
+    </select>
+    <update id="updateUser" parameterType="com.pms.domain.User">
+        update user set real_name=#{realName}, user_name=#{userName}, password=#{password} where id=#{id}
+    </update>
+    <insert id="insertUser" parameterType="com.pms.domain.User">
+        insert into user (real_name, user_name, password, admin) values (#{realName}, #{userName}, #{password}, 0);
+    </insert>
 </mapper>

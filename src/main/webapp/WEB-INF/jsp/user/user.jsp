@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>加密</title>
+    <title>个人信息</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="${ctx}/resource/admin/assets/css/normalize.css">
@@ -51,6 +51,9 @@
                         <a href="${ctx}/user/key"> <i class="menu-icon fa fa-key"></i>秘钥管理</a>
                     </li>
                 </c:if>
+                <li>
+                    <a href="${ctx}/user/user"> <i class="menu-icon fa fa-unlock"></i>个人信息</a>
+                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
@@ -93,52 +96,76 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="card">
-                            <form action="${ctx}/user/encode" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <form action="${ctx}/user/user" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 <div class="card-header">
-                                    <strong>加密</strong>
+                                    <strong>个人信息</strong>
                                 </div>
                                 <div class="card-body card-block">
-                                    <input type="hidden" name="userId" value="${sessionScope.id}">
+                                    <input type="hidden" name="id" value="${user.id}">
+                                    <input type="hidden" name="admin" value="${user.admin}">
                                     <div class="row form-group">
                                         <div style="width: 100px; margin-left: 15px;">
-                                            <label for="input1" class=" form-control-label">关键词</label>
+                                            <label for="input1" class=" form-control-label">姓名</label>
                                         </div>
-                                        <div><input type="text" id="input1" name="keyWord" value="${userKey.keyWord}" class="form-control">
+                                        <div><input type="text" id="input1" name="realName" value="${user.realName}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div style="width: 100px; margin-left: 15px;">
-                                            <label for="input2" class=" form-control-label">网站</label>
+                                            <label for="input2" class=" form-control-label">用户名</label>
                                         </div>
-                                        <div><input type="text" id="input2" name="keySecret" value="${userKey.keySecret}" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div style="width: 100px; margin-left: 15px;">
-                                            <label class=" form-control-label">加密方式</label>
-                                        </div>
-                                        <div>
-                                            <c:forEach items="${arithmetics}" var="arithmetic">
-                                                <label><input type="radio" name="arithmeticId" value="${arithmetic.id}" ${userKey.arithmeticId == arithmetic.id? "checked" : ""}> ${arithmetic.name}</label>
-                                            </c:forEach>
+                                        <div><input type="text" id="input2" name="userName" value="${user.userName}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row form-group" style="margin-bottom: 0;">
                                         <div style="width: 100px; margin-left: 15px;">
-                                            <label for="input4" class=" form-control-label">结果</label>
+                                            <label for="input3" class=" form-control-label">密码</label>
                                         </div>
-                                        <div><input type="text" id="input4" style="width: 320px;" readonly name="result" value="${userKey.result}" class="form-control">
+                                        <div><input type="password" id="input3" name="password" value="${user.password}" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary btn-sm">
-                                        <i class="fa fa-dot-circle-o"></i> 加密
-                                    </button>
-                                    <button type="reset" class="btn btn-danger btn-sm">
-                                        <i class="fa fa-ban"></i> 重置
+                                        <i class="fa fa-dot-circle-o"></i> 保存
                                     </button>
                                 </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <form action="${ctx}/user/user" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <div class="card-header">
+                                    <strong>我的密码</strong>
+                                </div>
+                                <table class="table" style="margin-bottom: 0;">
+                                    <thead>
+                                    <tr>
+                                        <th>关键词</th>
+                                        <th scope="col">网站</th>
+                                        <th>算法</th>
+                                        <th>密文</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${userKeys}" var="userKey">
+                                        <tr>
+                                            <td class="avatar">${userKey.keyWord}</td>
+                                            <td> ${userKey.keySecret}</td>
+                                            <td> ${userKey.arithmeticId == 1 ? "AES" : userKey.arithmeticId == 2 ? "DES" : "PBE"}</td>
+                                            <td> ${userKey.result}</td>
+                                            <td style="height: 56px;">
+                                                <a href="${ctx}/user/userKeyDel?id=${userKey.id}" class="btn btn-danger btn-sm">删除</a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                </table>
                             </form>
                         </div>
                     </div>

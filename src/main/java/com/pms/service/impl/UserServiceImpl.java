@@ -18,4 +18,19 @@ public class UserServiceImpl implements UserService {
         User userDB = userDao.selectUserByUserName(user.getUserName());
         return userDB != null ? StringUtils.equals(userDB.getPassword(), user.getPassword()) ? userDB : null : null;
     }
+
+    @Override
+    public User getUser(Integer id) {
+        return userDao.selectUserById(id);
+    }
+
+    @Override
+    public int updateUser(User user) {
+        return userDao.updateUser(user);
+    }
+
+    @Override
+    public User register(User user) {
+        return userDao.insertUser(user) > 0 ? userDao.selectUserByUserName(user.getUserName()) : null;
+    }
 }

@@ -1,7 +1,10 @@
 package com.pms.service.impl;
 
+import com.alibaba.druid.util.StringUtils;
 import com.pms.dao.ArithmeticDao;
+import com.pms.dao.UserKeyDao;
 import com.pms.domain.Arithmetic;
+import com.pms.domain.UserKey;
 import com.pms.domain.enums.ArithmeticEnum;
 import com.pms.service.ArithmeticService;
 import com.pms.util.AES;
@@ -21,6 +24,9 @@ public class ArithmeticServiceImpl implements ArithmeticService {
 
     @Autowired
     private ArithmeticDao arithmeticDao;
+    @Autowired
+    private UserKeyDao userKeyDao;
+
 
     @Override
     public File encode(MultipartFile file) throws IOException {
@@ -54,6 +60,25 @@ public class ArithmeticServiceImpl implements ArithmeticService {
         }
         fileResponseOutputStream.close();
         return fileResponse;
+    }
+
+    @Override
+    public UserKey encode(UserKey userKey) {
+        switch (userKey.getArithmeticId()) {
+            case 1:
+                userKey.setResult(AES.desEncryption(userKey.getKeyWord(), userKey.getKeySecret()));
+                break;
+            case 2:
+                userKey.setResult(DES.desEncryption(userKey.getKeyWord(), userKey.getKeySecret()));
+                break;
+            case 3:
+                userKey.setResult(PBE.desEncryption(userKey.getKeyWord(), userKey.getKeySecret()));
+                break;
+        }
+        if (userKeyDao.selectUserKeyByInfo(userKey) == null) {
+            userKeyDao.insertUserKey(userKey);
+        }
+        return userKey;
     }
 
     @Override
@@ -96,6 +121,16 @@ public class ArithmeticServiceImpl implements ArithmeticService {
     @Override
     public int updateSecretKey(Integer id, String secretKey) {
         return arithmeticDao.updateArithmeticSecretKey(id, secretKey);
+    }
+
+    @Override
+    public int setArithmeticInUse(Integer id, String inUse) {
+        return arithmeticDao.updateArithmeticInUse(id, StringUtils.equals(inUse, "1"));
+    }
+
+    @Override
+    public List<Arithmetic> getInUseArithmetic() {
+        return arithmeticDao.selectUsingArithmetics();
     }
 
     private void checkNull(String secretKey, FileOutputStream fileResponseOutputStream, BufferedReader bufferedReader) throws IOException {

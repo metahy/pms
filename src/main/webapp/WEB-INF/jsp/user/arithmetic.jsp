@@ -112,7 +112,10 @@
                                             <td> ${arithmetic.inUse ? "使用中" : ""}</td>
                                             <td style="height: 56px;">
                                                 <c:if test="${!arithmetic.inUse}">
-                                                    <a href="${ctx}/user/arithmetic?id=${arithmetic.id}" class="btn btn-success btn-sm">使用</a>
+                                                    <a href="${ctx}/user/arithmetic?id=${arithmetic.id}&inUse=1" class="btn btn-success btn-sm">使用</a>
+                                                </c:if>
+                                                <c:if test="${arithmetic.inUse}">
+                                                    <a href="${ctx}/user/arithmetic?id=${arithmetic.id}&inUse=0" class="btn btn-danger btn-sm">禁用</a>
                                                 </c:if>
                                             </td>
                                         </tr>

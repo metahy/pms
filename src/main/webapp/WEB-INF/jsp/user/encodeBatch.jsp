@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>加密</title>
+    <title>批量加密</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="${ctx}/resource/admin/assets/css/normalize.css">
@@ -37,7 +37,7 @@
                 <li>
                     <a href="${ctx}/user/decodeBatch"> <i class="menu-icon fa fa-unlock"></i>批量解密</a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="${ctx}/user/encode"><i class="menu-icon fa fa-lock"></i>加密</a>
                 </li>
                 <li>
@@ -93,41 +93,16 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="card">
-                            <form action="${ctx}/user/encode" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <form action="${ctx}/user/encodeBatch" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 <div class="card-header">
-                                    <strong>加密</strong>
+                                    <strong>批量加密</strong>
                                 </div>
                                 <div class="card-body card-block">
-                                    <input type="hidden" name="userId" value="${sessionScope.id}">
-                                    <div class="row form-group">
-                                        <div style="width: 100px; margin-left: 15px;">
-                                            <label for="input1" class=" form-control-label">关键词</label>
-                                        </div>
-                                        <div><input type="text" id="input1" name="keyWord" value="${userKey.keyWord}" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div style="width: 100px; margin-left: 15px;">
-                                            <label for="input2" class=" form-control-label">网站</label>
-                                        </div>
-                                        <div><input type="text" id="input2" name="keySecret" value="${userKey.keySecret}" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div style="width: 100px; margin-left: 15px;">
-                                            <label class=" form-control-label">加密方式</label>
-                                        </div>
-                                        <div>
-                                            <c:forEach items="${arithmetics}" var="arithmetic">
-                                                <label><input type="radio" name="arithmeticId" value="${arithmetic.id}" ${userKey.arithmeticId == arithmetic.id? "checked" : ""}> ${arithmetic.name}</label>
-                                            </c:forEach>
-                                        </div>
-                                    </div>
                                     <div class="row form-group" style="margin-bottom: 0;">
                                         <div style="width: 100px; margin-left: 15px;">
-                                            <label for="input4" class=" form-control-label">结果</label>
+                                            <label for="file-input" class=" form-control-label">上传文件</label>
                                         </div>
-                                        <div><input type="text" id="input4" style="width: 320px;" readonly name="result" value="${userKey.result}" class="form-control">
+                                        <div><input type="file" id="file-input" name="file" class="form-control-file">
                                         </div>
                                     </div>
                                 </div>

@@ -11,7 +11,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>加密</title>
+    <title>批量解密</title>
     <meta name="description" content="Ela Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="${ctx}/resource/admin/assets/css/normalize.css">
@@ -19,9 +19,7 @@
     <link rel="stylesheet" href="${ctx}/resource/admin/assets/css/font-awesome.min.css">
     <link rel="stylesheet" href="${ctx}/resource/admin/assets/css/style.css">
     <style>
-        @page {
-            margin: 0;
-        }
+    @page { margin: 0; }
     </style>
 </head>
 
@@ -34,10 +32,10 @@
                 <li>
                     <a href="${ctx}/user/encodeBatch"><i class="menu-icon fa fa-lock"></i>批量加密</a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="${ctx}/user/decodeBatch"> <i class="menu-icon fa fa-unlock"></i>批量解密</a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="${ctx}/user/encode"><i class="menu-icon fa fa-lock"></i>加密</a>
                 </li>
                 <li>
@@ -93,47 +91,30 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="card">
-                            <form action="${ctx}/user/encode" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <form action="${ctx}/user/decodeBatch" method="post" enctype="multipart/form-data" class="form-horizontal">
                                 <div class="card-header">
-                                    <strong>加密</strong>
+                                    <strong>批量解密</strong>
                                 </div>
                                 <div class="card-body card-block">
-                                    <input type="hidden" name="userId" value="${sessionScope.id}">
                                     <div class="row form-group">
                                         <div style="width: 100px; margin-left: 15px;">
-                                            <label for="input1" class=" form-control-label">关键词</label>
+                                            <label for="file-input" class="form-control-label">上传文件</label>
                                         </div>
-                                        <div><input type="text" id="input1" name="keyWord" value="${userKey.keyWord}" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div style="width: 100px; margin-left: 15px;">
-                                            <label for="input2" class=" form-control-label">网站</label>
-                                        </div>
-                                        <div><input type="text" id="input2" name="keySecret" value="${userKey.keySecret}" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="row form-group">
-                                        <div style="width: 100px; margin-left: 15px;">
-                                            <label class=" form-control-label">加密方式</label>
-                                        </div>
-                                        <div>
-                                            <c:forEach items="${arithmetics}" var="arithmetic">
-                                                <label><input type="radio" name="arithmeticId" value="${arithmetic.id}" ${userKey.arithmeticId == arithmetic.id? "checked" : ""}> ${arithmetic.name}</label>
-                                            </c:forEach>
+                                        <div><input type="file" id="file-input" name="file" class="form-control-file">
                                         </div>
                                     </div>
                                     <div class="row form-group" style="margin-bottom: 0;">
                                         <div style="width: 100px; margin-left: 15px;">
-                                            <label for="input4" class=" form-control-label">结果</label>
+                                            <label for="secretKey" class="form-control-label">秘钥</label>
                                         </div>
-                                        <div><input type="text" id="input4" style="width: 320px;" readonly name="result" value="${userKey.result}" class="form-control">
+                                        <div>
+                                            <textarea name="secretKey" id="secretKey" rows="3" placeholder="secretKey" class="form-control"></textarea>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-primary btn-sm">
-                                        <i class="fa fa-dot-circle-o"></i> 加密
+                                        <i class="fa fa-dot-circle-o"></i> 解密
                                     </button>
                                     <button type="reset" class="btn btn-danger btn-sm">
                                         <i class="fa fa-ban"></i> 重置
@@ -146,7 +127,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <script src="${ctx}/resource/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>

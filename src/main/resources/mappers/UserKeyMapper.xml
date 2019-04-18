@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pms.dao.UserKeyDao">
+    <resultMap id="userKeyMap" type="com.pms.domain.UserKey">
+        <result column="id" property="id"/>
+        <result column="key_word" property="keyWord"/>
+        <result column="key_secret" property="keySecret"/>
+        <result column="arithmetic_id" property="arithmeticId"/>
+        <result column="result" property="result"/>
+        <result column="user_id" property="userId"/>
+    </resultMap>
+    <sql id="base_column">
+        id, key_word, key_secret, arithmetic_id, result, user_id
+    </sql>
+    <select id="selectUserKeyByUserId" resultMap="userKeyMap">
+        select <include refid="base_column"/> from user_key where user_id=#{userId};
+    </select>
+    <select id="selectUserKeyByInfo" resultMap="userKeyMap">
+        select <include refid="base_column"/> from user_key where user_id=#{userId} and key_word=#{keyWord} and key_secret=#{keySecret} and arithmetic_id=#{arithmeticId};
+    </select>
+    <insert id="insertUserKey" parameterType="com.pms.domain.UserKey">
+        insert into user_key (key_word, key_secret, arithmetic_id, result, user_id) values (
+        #{keyWord},
+        #{keySecret},
+        #{arithmeticId},
+        #{result},
+        #{userId}
+        );
+    </insert>
+    <select id="selectUserKeysByUserId" resultMap="userKeyMap">
+        select <include refid="base_column"/> from user_key where user_id=#{userId};
+    </select>
+    <delete id="deleteUserKeyById">
+        delete from user_key where id=#{id};
+    </delete>
+</mapper>

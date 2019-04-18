@@ -15,6 +15,9 @@
     <select id="selectUsingArithmetic" resultMap="arithmeticMap">
         select <include refid="base_column"/> from arithmetic where in_use=1 limit 1;
     </select>
+    <select id="selectUsingArithmetics" resultMap="arithmeticMap">
+        select <include refid="base_column"/> from arithmetic where in_use=1;
+    </select>
     <select id="selectAllArithmetics" resultMap="arithmeticMap">
         select <include refid="base_column"/> from arithmetic;
     </select>
