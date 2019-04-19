@@ -11,7 +11,7 @@
  Target Server Version : 80012
  File Encoding         : 65001
 
- Date: 17/04/2019 14:32:46
+ Date: 19/04/2019 14:11:38
 */
 
 SET NAMES utf8mb4;
@@ -27,13 +27,13 @@ CREATE TABLE `arithmetic`  (
   `secret_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `in_use` tinyint(4) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of arithmetic
 -- ----------------------------
 INSERT INTO `arithmetic` VALUES (1, 'AES', 'aes', 1);
-INSERT INTO `arithmetic` VALUES (2, 'DES', 'des', 0);
+INSERT INTO `arithmetic` VALUES (2, 'DES', 'des', 1);
 INSERT INTO `arithmetic` VALUES (3, 'PBE', 'pbe', 0);
 
 -- ----------------------------
@@ -47,12 +47,33 @@ CREATE TABLE `user`  (
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `admin` tinyint(4) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (1, 'admin', 'admin', '123456', 1);
 INSERT INTO `user` VALUES (2, 'user', 'user', '123456', 0);
+INSERT INTO `user` VALUES (3, '王二小', 'test', '123456', 0);
+
+-- ----------------------------
+-- Table structure for user_key
+-- ----------------------------
+DROP TABLE IF EXISTS `user_key`;
+CREATE TABLE `user_key`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `key_word` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `key_secret` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `arithmetic_id` int(11) NULL DEFAULT NULL,
+  `result` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `user_id` int(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_key
+-- ----------------------------
+INSERT INTO `user_key` VALUES (7, '456', 'aes', 1, '70301ee3d1774cbfa0926b53e57245d0', 1);
+INSERT INTO `user_key` VALUES (8, '123', 'aes', 1, '7ce4b47eddd128df11df2d214244216e', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
