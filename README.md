@@ -16,6 +16,12 @@
 > - [x] 算法管理
 > - [x] 秘钥管理
 
+功能更新：
+
+> - [x] 移除txt文件批量加密、解密功能
+> - [x] 增加用户注册功能
+> - [x] 支持自定义秘钥加解密
+
 系统示例图片：
 
 ![logo](https://github.com/HiramJoyce/pms/blob/master/img/demo1.png)
