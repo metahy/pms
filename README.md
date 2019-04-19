@@ -26,6 +26,12 @@
 
 ![logo](https://github.com/HiramJoyce/pms/blob/master/img/demo4.png)
 
+![logo](https://github.com/HiramJoyce/pms/blob/master/img/demo5.png)
+
+![logo](https://github.com/HiramJoyce/pms/blob/master/img/demo6.png)
+
+![logo](https://github.com/HiramJoyce/pms/blob/master/img/demo7.png)
+
 ------
 
 作者 [HiramJoyce](https://github.com/HiramJoyce/)     
