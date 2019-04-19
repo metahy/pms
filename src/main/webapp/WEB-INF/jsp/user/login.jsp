@@ -31,6 +31,34 @@
 						<button class="lowin-btn login-btn">
 							登录
 						</button>
+						<div class="text-foot">
+							还没有账户? <a href="" class="register-link">注册</a>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="lowin-box lowin-register">
+				<div class="lowin-box-inner">
+					<form action="${ctx}/user/register" method="post">
+						<p>注册</p>
+						<div class="lowin-group">
+							<label>用户名</label>
+							<input type="text" name="userName" autocomplete="realName" class="lowin-input">
+						</div>
+						<div class="lowin-group">
+							<label>姓名</label>
+							<input type="text" name="realName" autocomplete="realName" class="lowin-input">
+						</div>
+						<div class="lowin-group">
+							<label>登录密码</label>
+							<input type="password" name="password" autocomplete="current-password" class="lowin-input">
+						</div>
+						<button type="submit" class="lowin-btn">
+							注册
+						</button>
+						<div class="text-foot">
+							已经拥有账户? <a href="" class="login-link">登录</a>
+						</div>
 					</form>
 				</div>
 			</div>

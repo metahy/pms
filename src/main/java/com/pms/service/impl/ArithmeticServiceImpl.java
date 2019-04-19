@@ -106,6 +106,22 @@ public class ArithmeticServiceImpl implements ArithmeticService {
     }
 
     @Override
+    public UserKey decode(UserKey userKey) {
+        switch (userKey.getArithmeticId()) {
+            case 1:
+                userKey.setKeyWord(AES.desDecryption(userKey.getResult(), userKey.getKeySecret()));
+                break;
+            case 2:
+                userKey.setKeyWord(DES.desDecryption(userKey.getResult(), userKey.getKeySecret()));
+                break;
+            case 3:
+                userKey.setKeyWord(PBE.desDecryption(userKey.getResult(), userKey.getKeySecret()));
+                break;
+        }
+        return userKey;
+    }
+
+    @Override
     public List<Arithmetic> getAllArithmetic() {
         return arithmeticDao.selectAllArithmetics();
     }

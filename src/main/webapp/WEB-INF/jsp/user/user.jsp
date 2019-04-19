@@ -31,13 +31,13 @@
     <nav class="navbar navbar-expand-sm navbar-default">
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
+                <%--<li>--%>
+                    <%--<a href="${ctx}/user/encodeBatch"><i class="menu-icon fa fa-lock"></i>批量加密</a>--%>
+                <%--</li>--%>
+                <%--<li>--%>
+                    <%--<a href="${ctx}/user/decodeBatch"> <i class="menu-icon fa fa-unlock"></i>批量解密</a>--%>
+                <%--</li>--%>
                 <li>
-                    <a href="${ctx}/user/encodeBatch"><i class="menu-icon fa fa-lock"></i>批量加密</a>
-                </li>
-                <li>
-                    <a href="${ctx}/user/decodeBatch"> <i class="menu-icon fa fa-unlock"></i>批量解密</a>
-                </li>
-                <li class="active">
                     <a href="${ctx}/user/encode"><i class="menu-icon fa fa-lock"></i>加密</a>
                 </li>
                 <li>
@@ -47,12 +47,12 @@
                     <li>
                         <a href="${ctx}/user/arithmetic"> <i class="menu-icon fa fa-bar-chart-o"></i>算法管理</a>
                     </li>
-                    <li>
-                        <a href="${ctx}/user/key"> <i class="menu-icon fa fa-key"></i>秘钥管理</a>
-                    </li>
+                    <%--<li>--%>
+                        <%--<a href="${ctx}/user/key"> <i class="menu-icon fa fa-key"></i>秘钥管理</a>--%>
+                    <%--</li>--%>
                 </c:if>
-                <li>
-                    <a href="${ctx}/user/user"> <i class="menu-icon fa fa-unlock"></i>个人信息</a>
+                <li class="active">
+                    <a href="${ctx}/user/user"> <i class="menu-icon fa fa-user"></i>个人信息</a>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->

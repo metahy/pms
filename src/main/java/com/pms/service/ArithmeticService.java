@@ -15,6 +15,8 @@ public interface ArithmeticService {
 
     File decode(MultipartFile file, String secretKey) throws IOException;
 
+    UserKey decode(UserKey userKey);
+
     List<Arithmetic> getAllArithmetic();
 
     int useArithmetic(Integer id);

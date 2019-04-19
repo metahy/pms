@@ -63,6 +63,7 @@ public class UserController {
 
     @PostMapping("register")
     public String register(User user, Model model, HttpSession session) {
+        System.out.println(user);
         User userDb = userService.register(user);
         if (userDb != null) {
             session.setAttribute("id", userDb.getId());
@@ -125,16 +126,18 @@ public class UserController {
     }
 
     @GetMapping("decode")
-    public String decode() {
+    public String decode(Model model) {
+        List<Arithmetic> arithmetics = arithmeticService.getInUseArithmetic();
+        model.addAttribute("arithmetics", arithmetics);
         return "user/decode";
     }
 
     @PostMapping("decode")
     public String decode(UserKey userKey, Model model) {
-//        System.out.println(userKey);
-//        List<Arithmetic> arithmetics = arithmeticService.getInUseArithmetic();
-//        model.addAttribute("arithmetics", arithmetics);
-//        model.addAttribute("userKey", arithmeticService.encode(userKey));
+        System.out.println(userKey);
+        List<Arithmetic> arithmetics = arithmeticService.getInUseArithmetic();
+        model.addAttribute("arithmetics", arithmetics);
+        model.addAttribute("userKey", arithmeticService.decode(userKey));
         return "user/decode";
     }
 

@@ -31,12 +31,12 @@
     <nav class="navbar navbar-expand-sm navbar-default">
         <div id="main-menu" class="main-menu collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li>
-                    <a href="${ctx}/user/encodeBatch"><i class="menu-icon fa fa-lock"></i>批量加密</a>
-                </li>
-                <li>
-                    <a href="${ctx}/user/decodeBatch"> <i class="menu-icon fa fa-unlock"></i>批量解密</a>
-                </li>
+                <%--<li>--%>
+                    <%--<a href="${ctx}/user/encodeBatch"><i class="menu-icon fa fa-lock"></i>批量加密</a>--%>
+                <%--</li>--%>
+                <%--<li>--%>
+                    <%--<a href="${ctx}/user/decodeBatch"> <i class="menu-icon fa fa-unlock"></i>批量解密</a>--%>
+                <%--</li>--%>
                 <li class="active">
                     <a href="${ctx}/user/encode"><i class="menu-icon fa fa-lock"></i>加密</a>
                 </li>
@@ -47,10 +47,13 @@
                     <li>
                         <a href="${ctx}/user/arithmetic"> <i class="menu-icon fa fa-bar-chart-o"></i>算法管理</a>
                     </li>
-                    <li>
-                        <a href="${ctx}/user/key"> <i class="menu-icon fa fa-key"></i>秘钥管理</a>
-                    </li>
+                    <%--<li>--%>
+                        <%--<a href="${ctx}/user/key"> <i class="menu-icon fa fa-key"></i>秘钥管理</a>--%>
+                    <%--</li>--%>
                 </c:if>
+                <li>
+                    <a href="${ctx}/user/user"> <i class="menu-icon fa fa-user"></i>个人信息</a>
+                </li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
@@ -101,21 +104,21 @@
                                     <input type="hidden" name="userId" value="${sessionScope.id}">
                                     <div class="row form-group">
                                         <div style="width: 100px; margin-left: 15px;">
-                                            <label for="input1" class=" form-control-label">关键词</label>
+                                            <label for="input1" class=" form-control-label">初始值</label>
                                         </div>
                                         <div><input type="text" id="input1" name="keyWord" value="${userKey.keyWord}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div style="width: 100px; margin-left: 15px;">
-                                            <label for="input2" class=" form-control-label">网站</label>
+                                            <label for="input2" class=" form-control-label">秘钥</label>
                                         </div>
                                         <div><input type="text" id="input2" name="keySecret" value="${userKey.keySecret}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div style="width: 100px; margin-left: 15px;">
-                                            <label class=" form-control-label">加密方式</label>
+                                            <label class=" form-control-label">加密算法</label>
                                         </div>
                                         <div>
                                             <c:forEach items="${arithmetics}" var="arithmetic">
@@ -125,7 +128,7 @@
                                     </div>
                                     <div class="row form-group" style="margin-bottom: 0;">
                                         <div style="width: 100px; margin-left: 15px;">
-                                            <label for="input4" class=" form-control-label">结果</label>
+                                            <label for="input4" class=" form-control-label">密文结果</label>
                                         </div>
                                         <div><input type="text" id="input4" style="width: 320px;" readonly name="result" value="${userKey.result}" class="form-control">
                                         </div>
